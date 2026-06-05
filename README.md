@@ -42,3 +42,27 @@ Workflow:
 ```bash
 git clone https://github.com/Brown-tamata/Vanuatu-Smart-Transport.git
 ``
+
+## 🔌 API Routes
+
+- GET /
+- POST /signup
+- POST /login
+- GET /trips
+- POST /trips
+- GET /bookings
+- POST /bookings
+- GET /admin/data
+
+
+
+## 🔐 Environment Variables
+
+- DATABASE_URL → database connection
+- PORT → server port
+- APP_ENV → environment mode
+
+## 🔁 CI/CD
+
+This project uses GitHub Actions for continuous integration.  
+The workflow automatically runs when code is pushed to Dev, Staging, and ITDI204 branches, installs dependencies, and performs checks before deployment.
