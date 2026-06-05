@@ -19,6 +19,10 @@ const pool = new Pool({
 });
 
 pool.connect()
+
+  .then(() => console.log("Database connected successfully"))
+  .catch(err => console.error("Database connection error:", err));
+
   .then(() => console.log("PostgreSQL connected"))
   .catch(err => console.error("Database connection error:", err));
 
@@ -35,6 +39,9 @@ const io = new Server(server, {
 
 app.use(cors());
 app.use(express.json());
+app.get("/", (req, res) => {
+  res.send("Vanuatu Smart Transport API is running ✅");
+})
 
 // ================= AUTH =================
 
@@ -661,6 +668,13 @@ io.on("connection", (socket) => {
 
 // ================= SERVER =================
 
-server.listen(5001, () => {
-  console.log("Server running on port 5001");
+// server.listen(5001, () => {
+//   console.log("Server running on port 5001");
+// });
+
+const PORT = process.env.PORT || 5001;
+
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
+``
