@@ -10,21 +10,34 @@ const bcrypt = require("bcrypt");
 const ROLES = ["Passenger", "Driver", "Admin"];
 
 // ================= DATABASE =================
+// const pool = new Pool({
+//   user: process.env.DB_USER,
+//   host: process.env.DB_HOST,
+//   database: process.env.DB_NAME,
+//   password: process.env.DB_PASSWORD,
+//   port: Number(process.env.DB_PORT)
+// });
+
+// pool.connect()
+
+//   .then(() => console.log("Database connected successfully"))
+//   .catch(err => console.error("Database connection error:", err));
+
+//   .then(() => console.log("PostgreSQL connected"))
+//   .catch(err => console.error("Database connection error:", err));
+
 const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: Number(process.env.DB_PORT)
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
+// ✅ Correct way
 pool.connect()
-
-  .then(() => console.log("Database connected successfully"))
+  .then(() => console.log("PostgreSQL connected ✅"))
   .catch(err => console.error("Database connection error:", err));
-
-  .then(() => console.log("PostgreSQL connected"))
-  .catch(err => console.error("Database connection error:", err));
+``
 
 // ================= EXPRESS =================
 const app = express();
