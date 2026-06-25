@@ -10,17 +10,34 @@ const bcrypt = require("bcrypt");
 const ROLES = ["Passenger", "Driver", "Admin"];
 
 // ================= DATABASE =================
+// const pool = new Pool({
+//   user: process.env.DB_USER,
+//   host: process.env.DB_HOST,
+//   database: process.env.DB_NAME,
+//   password: process.env.DB_PASSWORD,
+//   port: Number(process.env.DB_PORT)
+// });
+
+// pool.connect()
+
+//   .then(() => console.log("Database connected successfully"))
+//   .catch(err => console.error("Database connection error:", err));
+
+//   .then(() => console.log("PostgreSQL connected"))
+//   .catch(err => console.error("Database connection error:", err));
+
 const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_NAME,
-  password: process.env.DB_PASSWORD,
-  port: Number(process.env.DB_PORT)
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
+// ✅ Correct way
 pool.connect()
-  .then(() => console.log("PostgreSQL connected"))
+  .then(() => console.log("PostgreSQL connected ✅"))
   .catch(err => console.error("Database connection error:", err));
+``
 
 // ================= EXPRESS =================
 const app = express();
@@ -35,6 +52,9 @@ const io = new Server(server, {
 
 app.use(cors());
 app.use(express.json());
+app.get("/", (req, res) => {
+  res.send("Vanuatu Smart Transport API is running ✅");
+})
 
 // ================= AUTH =================
 
@@ -661,6 +681,13 @@ io.on("connection", (socket) => {
 
 // ================= SERVER =================
 
-server.listen(5001, () => {
-  console.log("Server running on port 5001");
+// server.listen(5001, () => {
+//   console.log("Server running on port 5001");
+// });
+
+const PORT = process.env.PORT || 5001;
+
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
+``
